@@ -27,7 +27,8 @@ test_requires = [
 ]
 
 dev_requires = [
-    'ipython'
+    'ipython',
+    'webtest',
 ]
 
 setup(name='learning_journal',
