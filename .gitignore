@@ -23,6 +23,12 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+bin/
+lib64
+pyvenv.cfg
+share/
+.DS_Store
+.Python
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -33,10 +39,12 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+pip-selfcheck.json
 
 # Unit test / coverage reports
 htmlcov/
 .tox/
+tox.ini
 .coverage
 .coverage.*
 .cache
