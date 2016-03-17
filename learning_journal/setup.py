@@ -29,6 +29,7 @@ test_requires = [
 dev_requires = [
     'ipython',
     'webtest',
+    'pyramid-ipython',
 ]
 
 setup(name='learning_journal',
