@@ -1,23 +1,25 @@
 from pyramid.response import Response
 from pyramid.view import view_config
-import jinja2
 
-from sqlalchemy.exc import DBAPIError
+from sqlalchemy.exc import DBAPIError, ResourceClosedError
 
 from .models import (
     DBSession,
     Entry,
 )
 
-
+# @view_config(route_name='list', renderer='string')
 @view_config(route_name='list', renderer='templates/base.jinja2')
 def list_view(request):
-    return {"test": "You are at list view!"}
+    display = DBSession().query(Entry.metadata.tables['entries']).all()[::-1]
+    return {"content": display, "header": "you are at list view!"}
 
 
-@view_config(route_name='detail', renderer='string')
+@view_config(route_name='detail', renderer='templates/base.jinja2')
 def detail_view(request):
-    return "You are at detail view!"
+    id_ = request.matchdict.get('entry_id')
+    display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
+    return {"message": str(display[2]), "header": "you are view the details!"}
 
 
 @view_config(route_name='add_entry', renderer='string')

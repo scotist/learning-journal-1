@@ -2,8 +2,11 @@
 import pytest
 from sqlalchemy import create_engine
 from learning_journal.models import DBSession, Base
+from pyramid import testing
 
-TEST_DATABASE_URL = "sqlite:////tmp/test_db.sqlite"
+
+# TEST_DATABASE_URL = "postgres://titan:password@localhost:5432/learning_journal" # DO NOT USE EVER.
+TEST_DATABASE_URL = "sqlite:////tmp/database.sqlite3"
 
 
 @pytest.fixture(scope="session")
@@ -33,3 +36,8 @@ def dbtransaction(request, sqlengine):
 
     request.addfinalizer(teardown)
     return connection
+
+
+@pytest.fixture()
+def dummy_request():
+    return testing.DummyRequest()
