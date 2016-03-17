@@ -19,6 +19,7 @@ def main(global_config, **settings):
 
     config.add_route('add_entry', '/create')
     config.add_route('detail', '/view/{entry_id}')
+    config.add_route('edit', '/edit/{entry_id}')
     config.add_route('list', '/')
 
     config.scan()

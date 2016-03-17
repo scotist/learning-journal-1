@@ -25,7 +25,14 @@ def detail_view(request):
     return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
 
 
-@view_config(route_name='add_entry', renderer='templates/detail.jinja2')
+@view_config(route_name='edit', renderer='templates/edit.jinja2')
+def edit_view(request):
+    id_ = request.matchdict.get('entry_id')
+    display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
+    return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
+
+
+@view_config(route_name='add_entry', renderer='templates/edit.jinja2')
 def add_view(request):
 
     title = request.POST.get('title')

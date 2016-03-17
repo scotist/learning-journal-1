@@ -90,20 +90,15 @@
   </head>
   <body>
     <div class="container">
-      <div class="one column">&nbsp;</div>
-      <div class="ten columns terminal">
-        <span class="green">nortonpengra</span>@<span class="purple">thatonelegend</span><span class="red">:~$</span> nano journal/entry.txt <span class="orange">||</span> ./easy_view.sh
-        <br>
-        <!-- <br> -->
-        <div class="row">
-            <b>{{time}}</b> ==> &lt;title&gt;<span>{{title}}</span>&lt;/title&gt;<span>{{title}}</span>
-
-           <p>{{message}}</p>
-            <a href="{{request.route_url('edit', entry_id = header)}}"><input type="submit" value="Edit"></a>
+      <div class="row">
+          <form action="/create" method="post">
+            <b>{{time}}</b> ==> &lt;title&gt;<input name="title" type="text" value="{{title}}">&lt;/title&gt;<br/><br/>
+            <textarea name="entry_text" placeholder="Write your entry here.">{{message}}</textarea>
+            <input type="submit" value="Publish">
             <a href="/"><input type="button" value="Home"></a>
+          </form>
           <br/>
         </div>
-      </div>
     </div>
   </body>
 </html>
