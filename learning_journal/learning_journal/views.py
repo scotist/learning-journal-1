@@ -9,13 +9,19 @@ from .models import (
 )
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
-    try:
-        one = DBSession.query(Entry).filter(Entry.title == 'one').first()
-    except DBAPIError:
-        return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one': one, 'project': 'learning_journal'}
+@view_config(route_name='list', renderer='string')
+def list_view(request):
+    return "You are at list view!"
+
+
+@view_config(route_name='detail', renderer='string')
+def detail_view(request):
+    return "You are at detail view!"
+
+
+@view_config(route_name='add_entry', renderer='string')
+def add_view(request):
+    return "You are adding an entry!"
 
 
 conn_err_msg = """\
