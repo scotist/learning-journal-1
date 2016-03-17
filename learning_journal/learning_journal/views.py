@@ -1,5 +1,7 @@
 from pyramid.response import Response
 from pyramid.view import view_config
+import transaction
+import datetime
 
 from sqlalchemy.exc import DBAPIError, ResourceClosedError
 
@@ -8,27 +10,38 @@ from .models import (
     Entry,
 )
 
+
 # @view_config(route_name='list', renderer='string')
-@view_config(route_name='list', renderer='templates/base.jinja2')
+@view_config(route_name='list', renderer='templates/pretty.jinja2')
 def list_view(request):
-    display = DBSession().query(Entry.metadata.tables['entries']).all()[::-1]
-    return {"content": display, "header": "you are at list view!"}
+    display = DBSession().query(Entry.metadata.tables['entries']).all()[::-1][:10]
+    return {"content": display, "header": "entries.order_by(latest)[:10]"}
 
 
-@view_config(route_name='detail', renderer='templates/base.jinja2')
+@view_config(route_name='detail', renderer='templates/detail.jinja2')
 def detail_view(request):
     id_ = request.matchdict.get('entry_id')
     display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    return {"message": str(display[2]), "header": "you are view the details!"}
+    return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
 
 
-@view_config(route_name='add_entry', renderer='string')
+@view_config(route_name='add_entry', renderer='templates/detail.jinja2')
 def add_view(request):
+
+    title = request.POST.get('title')
+    text = request.POST.get('entry_text')
+    if title is not None and text is not None:
+        session = DBSession()
+        new_model = Entry(title=title, text=text)
+        session.add(new_model)
+        session.flush()
+        transaction.commit()
+        # input(title, text)
     # New Entry()
     # DBSession.add
     # DBSession.flush
     # Transaction.commit
-    return "You are adding an entry!"
+    return {"time": datetime.datetime.utcnow()}
 
 
 conn_err_msg = """\
