@@ -1,5 +1,6 @@
 from pyramid.response import Response
 from pyramid.view import view_config
+import jinja2
 
 from sqlalchemy.exc import DBAPIError
 
@@ -9,9 +10,9 @@ from .models import (
 )
 
 
-@view_config(route_name='list', renderer='string')
+@view_config(route_name='list', renderer='templates/base.jinja2')
 def list_view(request):
-    return "You are at list view!"
+    return {"test": "You are at list view!"}
 
 
 @view_config(route_name='detail', renderer='string')
