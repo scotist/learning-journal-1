@@ -21,6 +21,10 @@ def detail_view(request):
 
 @view_config(route_name='add_entry', renderer='string')
 def add_view(request):
+    # New Entry()
+    # DBSession.add
+    # DBSession.flush
+    # Transaction.commit
     return "You are adding an entry!"
 
 
