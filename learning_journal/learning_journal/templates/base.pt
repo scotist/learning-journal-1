@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <h1>{% block header %}default header{% endblock %}</h1>
+  <p>{% block content %}default content{% endblock %}</p>
+  <footer>{% block footer %}default footer{% endblock %}</footer>
+</body>
+</html>
