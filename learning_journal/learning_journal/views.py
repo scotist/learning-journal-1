@@ -2,8 +2,12 @@ from pyramid.response import Response
 from pyramid.view import view_config
 import transaction
 import datetime
+from sqlalchemy import update
+from .forms import EntryCreateForm, EntryUpdateForm
+from pyramid.httpexceptions import HTTPFound
 
-from sqlalchemy.exc import DBAPIError, ResourceClosedError
+
+from sqlalchemy.exc import DBAPIError, ResourceClosedError, IntegrityError
 
 from .models import (
     DBSession,
@@ -28,27 +32,40 @@ def detail_view(request):
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit_view(request):
     id_ = request.matchdict.get('entry_id')
-    display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
+    entry = DBSession().query(Entry).get(id_)
+    id_ = entry.id
+    title = entry.title
+    text = entry.text
+    time = entry.created
+
+    form = EntryUpdateForm(request.POST, entry)
+    session = DBSession()
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry)
+        session.add(entry)
+        session.flush()
+        entry_id = entry.id
+        transaction.commit()
+        return HTTPFound(location='/view/{}'.format(entry_id))
+    return {'message': text, 'id': id_, 'title': title, 'time': time}
+
+    # display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
+    # return {"message": str(display[2]), "header": "<input name=\'id\' value=\'{}\'/>".format(display[0]), "title": display[1], "time": display[3]}
 
 
 @view_config(route_name='add_entry', renderer='templates/edit.jinja2')
 def add_view(request):
 
-    title = request.POST.get('title')
-    text = request.POST.get('entry_text')
-    if title is not None and text is not None:
+    form = EntryCreateForm(request.POST)
+    if request.method == 'POST' and form.validate():
         session = DBSession()
-        new_model = Entry(title=title, text=text)
-        session.add(new_model)
+        entry = Entry(title=form.title.data, text=form.text.data)
+        session.add(entry)
         session.flush()
         transaction.commit()
-        # input(title, text)
-    # New Entry()
-    # DBSession.add
-    # DBSession.flush
-    # Transaction.commit
+        return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
+
 
 
 conn_err_msg = """\
