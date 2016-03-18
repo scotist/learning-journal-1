@@ -91,14 +91,14 @@
   <body>
     <div class="container">
       <div class="row">
-          <form action="/create" method="post">
-            <b>{{time}}</b> ==> &lt;title&gt;<input name="title" type="text" value="{{title}}">&lt;/title&gt;<br/><br/>
-            <textarea name="entry_text" placeholder="Write your entry here.">{{message}}</textarea>
-            <input type="submit" value="Publish">
-            <a href="/"><input type="button" value="Home"></a>
-          </form>
-          <br/>
-        </div>
+      <form action="" method="post">
+        <form action="" method="post">{{id}}.<input type="hidden" name="id" value="{{id}}">
+          <input type="text" name="title" value="{{title}}">
+            <textarea name="text">{{message}}</textarea>
+          <input type="submit" value="Publish">
+        </form>
+        <br/>
+      </div>
     </div>
   </body>
 </html>

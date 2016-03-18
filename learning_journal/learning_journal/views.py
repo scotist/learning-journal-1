@@ -32,8 +32,25 @@ def detail_view(request):
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit_view(request):
     id_ = request.matchdict.get('entry_id')
-    display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    return {"message": str(display[2]), "header": "<input name=\'id\' value=\'{}\'/>".format(display[0]), "title": display[1], "time": display[3]}
+    entry = DBSession().query(Entry).get(id_)
+    id_ = entry.id
+    title = entry.title
+    text = entry.text
+    time = entry.created
+
+    form = EntryUpdateForm(request.POST, entry)
+    session = DBSession()
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry)
+        session.add(entry)
+        session.flush()
+        entry_id = entry.id
+        transaction.commit()
+        return HTTPFound(location='/view/{}'.format(entry_id))
+    return {'message': text, 'id': id_, 'title': title, 'time': time}
+
+    # display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
+    # return {"message": str(display[2]), "header": "<input name=\'id\' value=\'{}\'/>".format(display[0]), "title": display[1], "time": display[3]}
 
 
 @view_config(route_name='add_entry', renderer='templates/edit.jinja2')
@@ -48,7 +65,6 @@ def add_view(request):
         transaction.commit()
         return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
-
 
 
 
