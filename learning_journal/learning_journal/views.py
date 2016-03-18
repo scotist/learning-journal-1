@@ -4,6 +4,7 @@ import transaction
 import datetime
 from sqlalchemy import update
 from .forms import EntryCreateForm, EntryUpdateForm
+from pyramid.httpexceptions import HTTPFound
 
 
 from sqlalchemy.exc import DBAPIError, ResourceClosedError, IntegrityError
@@ -38,26 +39,17 @@ def edit_view(request):
 @view_config(route_name='add_entry', renderer='templates/edit.jinja2')
 def add_view(request):
 
-    title = request.POST.get('title')
-    text = request.POST.get('entry_text')
-    entry_id = request.POST.get('id')
-    if title is not None and text is not None:
+    form = EntryCreateForm(request.POST)
+    if request.method == 'POST' and form.validate():
         session = DBSession()
-        new_model = Entry(title=title, text=text)
-        session.add(new_model)
+        entry = Entry(title=form.title.data, text=form.text.data)
+        session.add(entry)
         session.flush()
         transaction.commit()
-            # session.rollback()
-            # target = session.query(Entry.metadata.tables['entries']).filter_by(id=entry_id).all()
-            # session.delete(target)
-            # session.flush()
-            # transaction.commit()
-        # input(title, text)
-    # New Entry()
-    # DBSession.add
-    # DBSession.flush
-    # Transaction.commit
+        return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
+
+
 
 
 conn_err_msg = """\
