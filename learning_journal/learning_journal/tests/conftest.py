@@ -5,8 +5,7 @@ from learning_journal.models import DBSession, Base
 from pyramid import testing
 
 
-# TEST_DATABASE_URL = "postgres://titan:password@localhost:5432/learning_journal" # DO NOT USE EVER.
-TEST_DATABASE_URL = "sqlite:////tmp/database.sqlite3"
+TEST_DATABASE_URL = "postgres://michaelsullivan:password@localhost:5432/michaelsullivan"
 
 
 @pytest.fixture(scope="session")
