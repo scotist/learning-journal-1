@@ -1,14 +1,5 @@
 learning_journal README
 ==================
 
-Getting Started
----------------
-
-- cd <directory containing this file>
-
-- $VENV/bin/python setup.py develop
-
-- $VENV/bin/initialize_learning_journal_db development.ini
-
-- $VENV/bin/pserve development.ini
+This project implements a blog-style website in Python using the Pyramid framework. Create, view, and edit entries from a postgres database. It's a joint project of Norton Pengra and Michael Sullivan.
 

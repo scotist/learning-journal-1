@@ -41,3 +41,13 @@ def dbtransaction(request, sqlengine):
 @pytest.fixture()
 def dummy_request():
     return testing.DummyRequest()
+
+
+@pytest.fixture()
+def loaded_db(dbtransaction):
+    """Instantiate a temporary database. Return one entry."""
+    from learning_journal.models import Entry, DBSession
+    new_model = Entry(title="Norton", text='waffles')
+    DBSession.add(new_model)
+    DBSession.flush()
+    return new_model
