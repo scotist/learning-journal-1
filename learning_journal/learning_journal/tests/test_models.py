@@ -4,6 +4,7 @@ from learning_journal.models import Entry, DBSession
 
 
 def test_create_mymodel(dbtransaction, dummy_request):
+    """Test creation of model."""
     new_model = Entry(title="Norton", text="waffles")
     assert new_model.id is None
     DBSession.add(new_model)
@@ -11,8 +12,8 @@ def test_create_mymodel(dbtransaction, dummy_request):
     assert new_model.id is not None
 
 
-
 def test_list_view(dbtransaction, dummy_request):
+    """Test list view function."""
     from learning_journal.views import list_view
     new_model = Entry(title="Norton", text="waffles")
     DBSession.add(new_model)
@@ -22,6 +23,7 @@ def test_list_view(dbtransaction, dummy_request):
 
 
 def test_detail_view(dbtransaction, dummy_request):
+    """Test detail view function."""
     from learning_journal.views import detail_view
     new_model = Entry(title="Norton", text="waffles")
     dummy_request.matchdict = {'entry_id': 1}
@@ -29,3 +31,12 @@ def test_detail_view(dbtransaction, dummy_request):
     DBSession.flush()
     response_dict = detail_view(dummy_request)
     assert response_dict['message'] == new_model.text
+
+
+def test_add_entry(dbtransaction):
+    """Test add entry function."""
+    new_model = Entry(title="Norton", text='waffles')
+    assert new_model.id is None
+    DBSession.add(new_model)
+    DBSession.flush()
+    assert new_model.id is not None
