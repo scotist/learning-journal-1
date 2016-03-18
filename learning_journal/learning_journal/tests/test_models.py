@@ -26,9 +26,9 @@ def test_detail_view(dbtransaction, dummy_request):
     """Test detail view function."""
     from learning_journal.views import detail_view
     new_model = Entry(title="Norton", text="waffles")
-    dummy_request.matchdict = {'entry_id': 1}
     DBSession.add(new_model)
     DBSession.flush()
+    dummy_request.matchdict = {'entry_id': new_model.id}
     response_dict = detail_view(dummy_request)
     assert response_dict['message'] == new_model.text
 
