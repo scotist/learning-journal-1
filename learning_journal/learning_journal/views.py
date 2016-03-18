@@ -2,8 +2,11 @@ from pyramid.response import Response
 from pyramid.view import view_config
 import transaction
 import datetime
+from sqlalchemy import update
+from .forms import EntryCreateForm, EntryUpdateForm
 
-from sqlalchemy.exc import DBAPIError, ResourceClosedError
+
+from sqlalchemy.exc import DBAPIError, ResourceClosedError, IntegrityError
 
 from .models import (
     DBSession,
@@ -29,7 +32,7 @@ def detail_view(request):
 def edit_view(request):
     id_ = request.matchdict.get('entry_id')
     display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
+    return {"message": str(display[2]), "header": "<input name=\'id\' value=\'{}\'/>".format(display[0]), "title": display[1], "time": display[3]}
 
 
 @view_config(route_name='add_entry', renderer='templates/edit.jinja2')
@@ -37,12 +40,18 @@ def add_view(request):
 
     title = request.POST.get('title')
     text = request.POST.get('entry_text')
+    entry_id = request.POST.get('id')
     if title is not None and text is not None:
         session = DBSession()
         new_model = Entry(title=title, text=text)
         session.add(new_model)
         session.flush()
         transaction.commit()
+            # session.rollback()
+            # target = session.query(Entry.metadata.tables['entries']).filter_by(id=entry_id).all()
+            # session.delete(target)
+            # session.flush()
+            # transaction.commit()
         # input(title, text)
     # New Entry()
     # DBSession.add
