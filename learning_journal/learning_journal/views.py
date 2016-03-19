@@ -2,6 +2,8 @@ from pyramid.response import Response
 from pyramid.view import view_config
 import transaction
 import datetime
+from jinja2 import Markup
+import markdown
 from sqlalchemy import update
 from .forms import EntryCreateForm, EntryUpdateForm
 from pyramid.httpexceptions import HTTPFound
@@ -66,6 +68,11 @@ def add_view(request):
         return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
 
+
+def render_markdown(content, linenums=False, pygments_style='default'):
+    md = markdown.Markdown()
+    product = Markup(md.convert(content))
+    return product
 
 
 conn_err_msg = """\
