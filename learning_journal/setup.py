@@ -25,7 +25,8 @@ requires = [
 test_requires = [
     'pytest',
     'tox',
-    'pytest-watch'
+    'pytest-watch',
+    'pytest-cov',
 ]
 
 dev_requires = [
