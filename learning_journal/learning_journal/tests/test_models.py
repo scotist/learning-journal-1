@@ -25,12 +25,14 @@ def test_list_view(dbtransaction, dummy_request):
 def test_detail_view(dbtransaction, dummy_request):
     """Test detail view function."""
     from learning_journal.views import detail_view
+    import markdown
+    md = markdown.Markdown()
     new_model = Entry(title="Norton", text="waffles")
     DBSession.add(new_model)
     DBSession.flush()
     dummy_request.matchdict = {'entry_id': new_model.id}
     response_dict = detail_view(dummy_request)
-    assert response_dict['message'] == new_model.text
+    assert response_dict['message'] == md.convert(new_model.text)
 
 
 def test_add_entry(dbtransaction):
