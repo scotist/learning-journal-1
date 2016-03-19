@@ -28,7 +28,7 @@ def list_view(request):
 def detail_view(request):
     id_ = request.matchdict.get('entry_id')
     display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    md = markdown.Markdown()
+    md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
     message = md.convert(display[2])
 
     return {"message": message, "header": display[0], "title": display[1], "time": display[3]}
