@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet"> -->
+    <style>
+      * {
+        font-family: monospace;
+      }
+      body {
+        background: url(/static/bg.jpg);
+        /*background-position: bottom;*/
+        background-size: cover;
+        color: #ddd;
+      }
+      .terminal {
+        margin-top: 10vh;
+        background: #1d1d1d;
+        height: 70vh;
+        border: 5px #333 solid;
+        /*padding-left: 5px;*/
+        /*padding-right: 5px;*/
+        padding: 5px;
+      }
+      .green {
+        color: #b8d68c;
+      }
+      .blue {
+        color: #4d679a;
+      }
+      .red {
+        color: #e84f4f;
+      }
+      .purple {
+        color: #9b64fb;
+      }
+      .orange {
+        color: #e1aa5d;
+      }
+      .blue2 {
+        color: #6d878d;
+      }
+
+      a {
+        color: #ddd;
+        text-decoration: none;
+        transition: .3s;
+      }
+      a:hover {
+        transition: .3s;
+      }
+      a span:hover {
+        transition: .3s;
+        color: #1EAEDB;
+      }
+      .gray {
+        color: #333;
+      }
+      input {
+        background: #1d1d1d;
+        border: none;
+        width: 15em;
+        color: #fff;
+        border-bottom: #fff solid 1px;
+      }
+      input:focus {
+        outline-width: 0;
+      }
+      input[type=submit], input[type=button] {
+        border:  #fff solid 1px;
+      }
+      input[type=submit]:active, input[type=button]:active {
+        border: #333 solid 1px;
+        color: #333;
+
+      }
+      input[type=text] {
+        width: 35em;
+      }
+      textarea {
+        background: #1d1d1d;
+        border: none;
+        width: 99%;
+        height: 50vh;
+        color: #fff;
+        border: #fff solid 1px;
+        overflow-y: hidden;
+      }
+    </style>
+    <title>Start Page</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+      <form action="" method="post">
+        <form action="" method="post">{{id}}.<input type="hidden" name="id" value="{{id}}">
+          <input type="text" name="title" value="{{title}}">
+            <textarea name="text">{{message}}</textarea>
+          <input type="submit" value="Publish">
+          <a href="/"><input type="button" value="Home"></a>
+        </form>
+        <br/>
+      </div>
+    </div>
+  </body>
+</html>
