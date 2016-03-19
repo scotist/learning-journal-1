@@ -19,6 +19,7 @@ requires = [
     'waitress',
     'psycopg2',
     'wtforms',
+    'markdown'
     ]
 
 test_requires = [
