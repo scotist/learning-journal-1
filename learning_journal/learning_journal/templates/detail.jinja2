@@ -98,7 +98,7 @@
         <div class="row">
             <b>{{time}}</b> ==> &lt;title&gt;<span>{{title}}</span>&lt;/title&gt;<span>{{title}}</span>
 
-           <p>{{message|markdown}}</p>
+           <p>{{message|safe}}</p>
             <a href="{{request.route_url('edit', entry_id = header)}}"><input type="submit" value="Edit"></a>
             <a href="/"><input type="button" value="Home"></a>
           <br/>

@@ -28,7 +28,10 @@ def list_view(request):
 def detail_view(request):
     id_ = request.matchdict.get('entry_id')
     display = DBSession().query(Entry.metadata.tables['entries']).filter_by(id=id_).one()
-    return {"message": str(display[2]), "header": display[0], "title": display[1], "time": display[3]}
+    md = markdown.Markdown()
+    message = md.convert(display[2])
+
+    return {"message": message, "header": display[0], "title": display[1], "time": display[3]}
 
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
@@ -69,10 +72,10 @@ def add_view(request):
     return {"time": datetime.datetime.utcnow()}
 
 
-def render_markdown(content, linenums=False, pygments_style='default'):
-    md = markdown.Markdown()
-    product = Markup(md.convert(content))
-    return product
+# def render_markdown(content, linenums=False, pygments_style='default'):
+#     md = markdown.Markdown()
+#     product = Markup(md.convert(content))
+#     return product
 
 
 conn_err_msg = """\
