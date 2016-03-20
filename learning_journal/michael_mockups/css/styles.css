@@ -1,0 +1,35 @@
+.btn {
+    margin-top: 15px
+}
+a:hover {
+    text-decoration: none;
+}
+
+.lj_heading {
+    margin-top: -15px;
+}
+
+/****************/
+
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    min-height: 100%;
+    height: auto;
+    height: 100%;
+    margin: 0 auto -4em;
+}
+
+.footer, .push {
+    height: 4em;
+}
+
+.title {
+    color: #4c66a4;
+}
