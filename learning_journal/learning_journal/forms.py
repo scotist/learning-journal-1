@@ -12,3 +12,7 @@ class EntryCreateForm(Form):
 
 class EntryUpdateForm(EntryCreateForm):
     id = HiddenField()
+
+class LoginForm(Form):
+    username = StringField('Username', [validators.Length (min=1, max=128)])
+    password = StringField('Password', [validators.Length (min=1, max=128)])

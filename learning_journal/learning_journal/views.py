@@ -1,8 +1,8 @@
 from pyramid.view import view_config
 import datetime
-from .forms import EntryCreateForm, EntryUpdateForm
+from .forms import EntryCreateForm, EntryUpdateForm, LoginForm
 from pyramid.httpexceptions import HTTPFound
-
+from .security import check_pw
 from .models import (
     DBSession,
     Entry,
@@ -51,12 +51,13 @@ def add_view(request):
     return {"time": datetime.datetime.utcnow()}
 
 
-@view_config(route_name='login', renderer='templates/login.pt')
-def login(request):
+@view_config(route_name='login', renderer='templates/login.jinja2')
+def login_view(request):
+    username = request.params.get('username', '')
+    password = request.params.get('password', '')
+    login_form = LoginForm(username=username, password=password)
     if request.method == 'POST':
-        username = request.params.get('username', '')
-        password = request.params.get('password', '')
         if check_pw(password):
             headers = remember(request, username)
             return HTTPFound(location='/', headers=headers)
-    return {}
+    return {'form': login_form}

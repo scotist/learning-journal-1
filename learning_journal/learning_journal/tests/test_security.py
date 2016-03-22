@@ -7,14 +7,12 @@ from learning_journal.__init__ import main
 # from learning_journal.security import check_pw
 
 
-
 AUTH_DATA = {'username': 'scotist', 'password': 'haecceitas'}
-
 
 
 @pytest.fixture()
 def app():
-    settings = {'sqlalchemy.url': 'sqlite:////temp/foobar.sqlite'}
+    settings = {'sqlalchemy.url': 'postgres://michaelsullivan:password@localhost:5432/michaelsullivan'}
     app = main({}, **settings)
     return webtest.TestApp(app)
 
@@ -28,7 +26,6 @@ def auth_env():
 
 @pytest.fixture()
 def authenticated_app(app, auth_env):
-    data = {'username': 'scotist', 'password': 'haecceitas'}
     app.post('/login', AUTH_DATA)
     return app
 
@@ -38,9 +35,9 @@ def authenticated_app(app, auth_env):
 #     assert response.status_code == 403
 
 
-def test_access_to_view(authenticated_app):
-    response = authenticated_app.get('/secure')
-    assert response.status_code == 200
+# def test_access_to_view(authenticated_app):
+#     response = authenticated_app.get('/login')
+#     assert response.status_code == 200
 
 
 # def test_password_exists(auth_env):
@@ -51,19 +48,19 @@ def test_access_to_view(authenticated_app):
 #     assert os.environ.get('AUTH_USERNAME', None) is not None
 
 
-# def test_check_pw_success(auth_env):
-#     from foobar.security import check_pw
-#     password = 'haecceitas'
-#     assert check_pw(password)
+def test_check_pw_success(auth_env):
+    from learning_journal.security import check_pw
+    password = 'haecceitas'
+    assert check_pw(password)
 
-# def test_check_pw_fails(auth_env):
-#     from foobar.security import check_pw
-#     password = 'not haecceitas'
-#     assert not check_pw(password)
+def test_check_pw_fails(auth_env):
+    from learning_journal.security import check_pw
+    password = 'blargles'
+    assert not check_pw(password)
 
 
-# def test_stored_password_is_encrypted(auth_env):
-#     assert os.environ.get('AUTH_PASSWORD', None) != 'haecceitas'
+def test_stored_password_is_encrypted(auth_env):
+    assert os.environ.get('AUTH_PASSWORD', None) != 'haecceitas'
 
 
 # def test_get_login_view(app):
