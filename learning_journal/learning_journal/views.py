@@ -11,7 +11,7 @@ from .models import (
 
 @view_config(route_name='login', renderer='string')
 def login_view(request):
-    remember(request)
+    remember(request, userid="norton")
     return "You are at login view"
 
 
@@ -35,7 +35,7 @@ def detail_view(request):
 
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2',
-             permission="group:admin")
+             permission="edit")
 def edit_view(request):
     id_ = request.matchdict.get('entry_id')
     entry = DBSession().query(Entry).get(id_)
@@ -52,7 +52,7 @@ def edit_view(request):
 
 
 @view_config(route_name='add_entry', renderer='templates/edit.jinja2',
-             permission="group:admin")
+             permission="edit")
 def add_view(request):
     form = EntryCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
