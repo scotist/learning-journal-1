@@ -49,7 +49,7 @@ def edit_view(request):
     return {'entry': entry}
 
 
-@view_config(route_name='add_entry', renderer='templates/edit.jinja2'
+@view_config(route_name='add_entry', renderer='templates/edit.jinja2',
              permission="group:admin")
 def add_view(request):
     form = EntryCreateForm(request.POST)
