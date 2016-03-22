@@ -26,10 +26,12 @@ def list_view(request):
 def detail_view(request):
     id_ = request.matchdict.get('entry_id')
     entry = DBSession().query(Entry).get(id_)
-    md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
-    message = md.convert(entry.text)
+    # md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
+    # message = md.convert(entry.text)
     # import pdb; pdb.set_trace()
+    message = entry.markdown_text
     return {'entry': entry, 'message': message}
+
 
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
