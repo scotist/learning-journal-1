@@ -5,7 +5,7 @@ class DefaultRoot(object):
 
     __acl__ = [
         (Allow, Everyone, 'view'),
-        (Allow, 'group:admin', ALL_PERMISSIONS)
+        (Allow, 'norton', ['edit', 'view'])
     ]
 
     def __init__(self, request):
