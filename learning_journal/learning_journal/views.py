@@ -9,7 +9,7 @@ from .models import (
 )
 
 
-@view_config(route_name='login', renderer='template/login.jinja2')
+@view_config(route_name='login', renderer='templates/login.jinja2')
 def login_view(request):
     """ Log the user in automatically.
 
