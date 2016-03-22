@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from learning_journal.models import Entry, DBSession
-
+import webtest.app.AppError
+import pytest
 
 def test_list_route(dbtransaction, app):
     """Test if model initialized with correct vals."""
@@ -11,8 +12,8 @@ def test_list_route(dbtransaction, app):
 
 def test_create_route(dbtransaction, app):
     """Test if permissions block anonymous users."""
-    response = app.get('/create')
-    assert response.status_code == 403
+    with pytest.raises(webtest.app.AppEror):
+        app.get('/create')
 
 
 def test_edit_route(dbtransaction, app):
@@ -20,8 +21,8 @@ def test_edit_route(dbtransaction, app):
     new_model = Entry(title="Norton", text="waffles")
     DBSession.add(new_model)
     DBSession.flush()
-    response = app.get('/edit/{}'.format(new_model.id))
-    assert response.status_code == 403
+    with pytest.raises(webtest.app.AppEror):
+        app.get('/edit/{}'.format(new_model.id))
 
 
 def test_list_view(dbtransaction, dummy_request):
