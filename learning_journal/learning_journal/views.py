@@ -1,6 +1,6 @@
 from pyramid.view import view_config
 import datetime
-from .forms import EntryCreateForm, EntryUpdateForm
+from .forms import EntryCreateForm, EntryUpdateForm, LoginForm
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 from .models import (
@@ -9,15 +9,19 @@ from .models import (
 )
 
 
-@view_config(route_name='login', renderer='string')
+@view_config(route_name='login', renderer='template/login.jinja2')
 def login_view(request):
     """ Log the user in automatically.
 
     The remember object actually returns a header list of tuples containing
     cookie information
     """
-    headers = remember(request, userid="norton")
-    return HTTPFound(location="/", headers=headers)
+    form = LoginForm(request.POST)
+    if request.method == 'POST':
+        headers = remember(request, userid="norton")
+        return HTTPFound(location="/", headers=headers)
+
+    return {}
 
 
 @view_config(route_name='logout', renderer='string')
