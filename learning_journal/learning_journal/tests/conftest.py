@@ -8,6 +8,18 @@ from pyramid import testing
 TEST_DATABASE_URL = "postgres://titan:password@localhost:5432/test1"
 
 
+@pytest.fixture()
+def app():
+    """Create a dummy app."""
+    from learning_journal import main
+    from pyramid.paster import get_appsettings
+    from webtest import TestApp
+    settings = get_appsettings('development.ini')
+    settings['sqlalchemy.url'] = TEST_DATABASE_URL
+    app = main({}, **settings)
+    return TestApp(app)
+
+
 @pytest.fixture(scope="session")
 def sqlengine(request):
     # engine is the connection to the database

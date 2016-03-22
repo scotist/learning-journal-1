@@ -3,6 +3,12 @@
 from learning_journal.models import Entry, DBSession
 
 
+def test_list_route(dbtransaction, app):
+    """Test if model initialized with correct vals."""
+    response = app.get('/')
+    assert response.status_code == 200
+
+
 def test_list_view(dbtransaction, dummy_request):
     """Test list view function."""
     from learning_journal.views import list_view
