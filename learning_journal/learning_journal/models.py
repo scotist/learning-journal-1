@@ -26,6 +26,7 @@ class Entry(Base):
     title = Column(Unicode(128), unique=True, nullable=False)
     text = Column(UnicodeText)
     created = Column(DateTime, default=datetime.datetime.utcnow)
+
     @property
     def markdown_text(self):
         md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')

@@ -49,3 +49,14 @@ def add_view(request):
         session.flush()
         return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
+
+
+@view_config(route_name='login', renderer='templates/login.pt')
+def login(request):
+    if request.method == 'POST':
+        username = request.params.get('username', '')
+        password = request.params.get('password', '')
+        if check_pw(password):
+            headers = remember(request, username)
+            return HTTPFound(location='/', headers=headers)
+    return {}
