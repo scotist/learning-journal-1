@@ -18,6 +18,8 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('list', '/')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
     config.add_route('add_entry', '/create')
     config.add_route('detail', '/view/{entry_id}')
     config.add_route('edit', '/edit/{entry_id}')
