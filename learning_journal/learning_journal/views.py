@@ -32,7 +32,8 @@ def detail_view(request):
     return {'entry': entry}
 
 
-@view_config(route_name='edit', renderer='templates/edit.jinja2')
+@view_config(route_name='edit', renderer='templates/edit.jinja2',
+             permission="group:admin")
 def edit_view(request):
     id_ = request.matchdict.get('entry_id')
     entry = DBSession().query(Entry).get(id_)
