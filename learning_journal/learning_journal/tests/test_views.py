@@ -6,7 +6,7 @@ from learning_journal.models import Entry, DBSession
 def test_list_route(dbtransaction, app):
     """Test if model initialized with correct vals."""
     response = app.get('/')
-    assert response.status_code == 200
+    assert response.status_code == 403
 
 
 def test_list_view(dbtransaction, dummy_request):
