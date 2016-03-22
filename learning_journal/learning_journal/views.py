@@ -24,7 +24,8 @@ def login_view(request):
     form = LoginForm(request.POST)
     if request.method == 'POST' and form.validate():
 
-        if form.data['username'] == USERNAME and form.data['password'] == PASSWORD:
+        if form.data['username'] == USERNAME and \
+           form.data['password'] == PASSWORD:
             headers = remember(request, userid="norton")
             return HTTPFound(location="/", headers=headers)
         else:
