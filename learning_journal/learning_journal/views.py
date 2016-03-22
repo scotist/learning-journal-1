@@ -11,14 +11,24 @@ from .models import (
 
 @view_config(route_name='login', renderer='string')
 def login_view(request):
-    remember(request, userid="norton")
-    return "You are at login view"
+    """ Log the user in automatically.
+
+    The remember object actually returns a header list of tuples containing
+    cookie information
+    """
+    headers = remember(request, userid="norton")
+    return HTTPFound(location="/", headers=headers)
 
 
 @view_config(route_name='logout', renderer='string')
 def logout_view(request):
-    forget(request)
-    return "You are at logout view"
+    """ Log the user out automatically.
+
+    The remember object actually returns a header list of tuples containing
+    cookie information
+    """
+    headers = forget(request)
+    return HTTPFound(location="/", headers=headers)
 
 
 @view_config(route_name='list', renderer='templates/pretty.jinja2')
