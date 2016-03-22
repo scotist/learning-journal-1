@@ -96,9 +96,9 @@
         <br>
         <!-- <br> -->
         <div class="row">
-            <b>{entry.created}</b> ==> &lt;title&gt;<span>{{entry.title}}</span>&lt;/title&gt;<span>{entry.title}</span>
+            <b>{{entry.created}}</b> ==> &lt;title&gt;<span>{{entry.title}}</span>&lt;/title&gt;<span>{{entry.title}}</span>
 
-           <p>{message|safe}</p>
+           <p>{{message|safe}}</p>
             <a href="{{request.route_url('edit', entry_id = entry.id)}}"><input type="submit" value="Edit"></a>
             <a href="/"><input type="button" value="Home"></a>
           <br/>

@@ -29,7 +29,7 @@ def detail_view(request):
     md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
     message = md.convert(entry.text)
     # import pdb; pdb.set_trace()
-    return {'entry': entry}
+    return {'entry': entry, 'message': message}
 
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
