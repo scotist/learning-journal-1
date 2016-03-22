@@ -7,6 +7,11 @@ from .models import (
     DBSession,
     Entry,
 )
+try:
+    from .secrets import USERNAME, PASSWORD
+except ImportError:
+    USERNAME = "default"
+    PASSWORD = "password"
 
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
@@ -17,7 +22,9 @@ def login_view(request):
     cookie information
     """
     form = LoginForm(request.POST)
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
+
+        if form.data.username == USERNAME and form.data.password == PASSWORD:
         headers = remember(request, userid="norton")
         return HTTPFound(location="/", headers=headers)
 
