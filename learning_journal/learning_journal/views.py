@@ -10,7 +10,7 @@ from .models import (
 try:
     from .secrets import USERNAME, PASSWORD
 except ImportError:
-    USERNAME = "default"
+    USERNAME = "norton"
     PASSWORD = "password"
 
 
@@ -25,10 +25,15 @@ def login_view(request):
     if request.method == 'POST' and form.validate():
 
         if form.data.username == USERNAME and form.data.password == PASSWORD:
-        headers = remember(request, userid="norton")
-        return HTTPFound(location="/", headers=headers)
-
-    return {}
+            headers = remember(request, userid="norton")
+            return HTTPFound(location="/", headers=headers)
+        else:
+            message = "Login Failed"
+            color = "red"
+    else:
+        message = "Please Login"
+        color = "green"
+    return {"message": message, "color": color}
 
 
 @view_config(route_name='logout', renderer='string')
