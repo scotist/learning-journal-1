@@ -92,12 +92,11 @@
     <div class="container">
       <div class="row">
       <form action="" method="post">
-        <form action="" method="post">{{id}}.<input type="hidden" name="id" value="{{id}}">
-          <input type="text" name="title" value="{{title}}">
-            <textarea name="text">{{message}}</textarea>
+        <form action="" method="post">{% if entry %}{{entry.id}}{% endif %}.<input type="hidden" name="id" value="{% if entry %}{{entry.id}}{% endif %}">
+          <input type="text" name="title" value="{% if entry %}{{entry.title}}{% endif %}">
+            <textarea name="text">{% if entry %}{{entry.text}}{% endif %}</textarea>
           <input type="submit" value="Publish">
           <a href="/"><input type="button" value="Home"></a>
-        </form>
         <br/>
       </div>
     </div>
