@@ -4,6 +4,7 @@ from learning_journal.models import Entry, DBSession
 from webtest import app as webtestapp
 import pytest
 
+
 def test_list_route(dbtransaction, app):
     """Test if model initialized with correct vals."""
     response = app.get('/')
