@@ -9,6 +9,8 @@ from .models import (
     Base,
 )
 
+from .security import DefaultRoot
+
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -22,7 +24,8 @@ def main(global_config, **settings):
             'seekrit',
             hashalg='sha512'
         ),
-        authorization_policy=ACLAuthorizationPolicy()
+        authorization_policy=ACLAuthorizationPolicy(),
+        root_factory=DefaultRoot,
     )
     config.include('pyramid_jinja2')
     config.add_static_view('static', 'static', cache_max_age=3600)
