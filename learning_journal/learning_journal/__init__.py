@@ -1,15 +1,12 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
-
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
-
+from .security import DefaultRoot
 from .models import (
     DBSession,
     Base,
 )
-
-from .security import DefaultRoot
 
 
 def main(global_config, **settings):
