@@ -40,12 +40,12 @@ def authenticated_app(app, auth_env):
 #     assert response.status_code == 200
 
 
-# def test_password_exists(auth_env):
-#     assert os.environ.get('AUTH_PASSWORD', None) is not None
+def test_password_exists(auth_env):
+    assert os.environ.get('AUTH_PASSWORD', None) is not None
 
 
-# def test_username_exists(auth_env):
-#     assert os.environ.get('AUTH_USERNAME', None) is not None
+def test_username_exists(auth_env):
+    assert os.environ.get('AUTH_USERNAME', None) is not None
 
 
 def test_check_pw_success(auth_env):
@@ -69,8 +69,7 @@ def test_stored_password_is_encrypted(auth_env):
 
 
 # def test_post_login_success(app, auth_env):
-#     data = {'username': 'scotist', 'password': 'haecceitas'}
-#     response = app.post('/login', data)
+#     response = app.post('/login', AUTH_DATA)
 #     assert response.status_code == 302
 
 
