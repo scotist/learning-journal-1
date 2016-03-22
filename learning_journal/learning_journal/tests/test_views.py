@@ -6,6 +6,21 @@ from learning_journal.models import Entry, DBSession
 def test_list_route(dbtransaction, app):
     """Test if model initialized with correct vals."""
     response = app.get('/')
+    assert response.status_code == 200
+
+
+def test_create_route(dbtransaction, app):
+    """Test if permissions block anonymous users."""
+    response = app.get('/create')
+    assert response.status_code == 403
+
+
+def test_edit_route(dbtransaction, app):
+    """Test if permissions block anonymous users."""
+    new_model = Entry(title="Norton", text="waffles")
+    DBSession.add(new_model)
+    DBSession.flush()
+    response = app.get('/edit/{}'.format(new_model.id))
     assert response.status_code == 403
 
 
