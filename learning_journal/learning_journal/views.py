@@ -9,6 +9,16 @@ from .models import (
 )
 
 
+@view_config(route_name='login', renderer='string')
+def login_view(request):
+    return "You are at login view"
+
+
+@view_config(route_name='logout', renderer='string')
+def logout_view(request):
+    return "You are at logout view"
+
+
 @view_config(route_name='list', renderer='templates/pretty.jinja2')
 def list_view(request):
     display = DBSession.query(Entry).order_by(Entry.created)
