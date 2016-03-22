@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from learning_journal.models import Entry, DBSession
-import webtest.app.AppError
+from webtest import app as webtestapp
 import pytest
 
 def test_list_route(dbtransaction, app):
@@ -12,7 +12,7 @@ def test_list_route(dbtransaction, app):
 
 def test_create_route(dbtransaction, app):
     """Test if permissions block anonymous users."""
-    with pytest.raises(webtest.app.AppError):
+    with pytest.raises(webtestapp.AppError):
         app.get('/create')
 
 
@@ -21,7 +21,7 @@ def test_edit_route(dbtransaction, app):
     new_model = Entry(title="Norton", text="waffles")
     DBSession.add(new_model)
     DBSession.flush()
-    with pytest.raises(webtest.app.AppError):
+    with pytest.raises(webtestapp.AppError):
         app.get('/edit/{}'.format(new_model.id))
 
 
