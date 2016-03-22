@@ -11,13 +11,13 @@ from .models import (
 
 @view_config(route_name='login', renderer='string')
 def login_view(request):
-    forget(request)
+    remember(request)
     return "You are at login view"
 
 
 @view_config(route_name='logout', renderer='string')
 def logout_view(request):
-    remember(request)
+    forget(request)
     return "You are at logout view"
 
 
