@@ -20,7 +20,7 @@ Base = declarative_base()
 
 class Entry(Base):
     __tablename__ = 'entries'
-    id = Column(Integer, unique=True, primary_key=True)
+    id = Column(Integer, primary_key=True)
     title = Column(Unicode(128), unique=True, nullable=False)
     text = Column(UnicodeText)
     created = Column(DateTime, default=datetime.datetime.utcnow)

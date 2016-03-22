@@ -5,7 +5,7 @@ from learning_journal.models import DBSession, Base
 from pyramid import testing
 
 
-TEST_DATABASE_URL = "postgres://titan:password@localhost:5432/test1"
+TEST_DATABASE_URL = "postgres://michaelsullivan:password@localhost:5432/michaelsullivan"
 
 
 @pytest.fixture(scope="session")
