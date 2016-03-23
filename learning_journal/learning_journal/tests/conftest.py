@@ -17,6 +17,7 @@ def app():
     from learning_journal import main
     from pyramid.paster import get_appsettings
     from webtest import TestApp
+    # import pdb; pdb.set_trace()
     settings = get_appsettings('development.ini')
     settings['sqlalchemy.url'] = TEST_DATABASE_URL
     app = main({}, **settings)
@@ -61,7 +62,7 @@ def dummy_request():
 def loaded_db(dbtransaction):
     """Instantiate a temporary database. Return one entry."""
     from learning_journal.models import Entry, DBSession
-    new_model = Entry(title="Norton", text='waffles')
+    new_model = Entry(title="scotist", text='haecceitas')
     DBSession.add(new_model)
     DBSession.flush()
     return new_model

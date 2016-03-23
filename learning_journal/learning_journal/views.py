@@ -2,11 +2,8 @@ from pyramid.view import view_config
 import datetime
 from .forms import EntryCreateForm, EntryUpdateForm, LoginForm
 from pyramid.httpexceptions import HTTPFound
-<<<<<<< HEAD
 from .security import check_pw
-=======
 from pyramid.security import remember, forget
->>>>>>> 199dd29d889a7eddb3b3bed48b624e071f6a698b
 from .models import (
     DBSession,
     Entry,
@@ -14,31 +11,31 @@ from .models import (
 try:
     from .secrets import USERNAME, PASSWORD
 except ImportError:
-    USERNAME = "norton"
-    PASSWORD = "password"
+    USERNAME = "scotist"
+    PASSWORD = "haecceitas"
 
 
-@view_config(route_name='login', renderer='templates/login.jinja2')
-def login_view(request):
-    """ Log the user in automatically.
+# @view_config(route_name='login', renderer='templates/login.jinja2')
+# def login_view(request):
+#     """ Log the user in automatically.
 
-    The remember object actually returns a header list of tuples containing
-    cookie information
-    """
-    form = LoginForm(request.POST)
-    if request.method == 'POST' and form.validate():
+#     The remember object actually returns a header list of tuples containing
+#     cookie information
+#     """
+#     form = LoginForm(request.POST)
+#     if request.method == 'POST' and form.validate():
 
-        if form.data['username'] == USERNAME and \
-           form.data['password'] == PASSWORD:
-            headers = remember(request, userid="norton")
-            return HTTPFound(location="/", headers=headers)
-        else:
-            message = "Login Failed"
-            color = "red"
-    else:
-        message = "Please Login"
-        color = "green"
-    return {"message": message, "color": color}
+#         if form.data['username'] == USERNAME and \
+#            form.data['password'] == PASSWORD:
+#             headers = remember(request, userid="scotist")
+#             return HTTPFound(location="/", headers=headers)
+#         else:
+#             message = "Login Failed"
+#             color = "red"
+#     else:
+#         message = "Please Login"
+#         color = "green"
+    # return {"message": message, "color": color}
 
 
 @view_config(route_name='logout', renderer='string')

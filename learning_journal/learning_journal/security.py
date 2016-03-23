@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import os
 from passlib.apps import custom_app_context as pwd_context
 
@@ -45,16 +44,15 @@ def groupfinder(userid, request):
 #         self.request = request
 
 #     def __getitem__()
-=======
+
 from pyramid.security import Allow, Everyone, ALL_PERMISSIONS
 
 
 class DefaultRoot(object):
 
     __acl__ = [
-        (Allow, 'norton', ['edit'])
+        (Allow, 'scotist', ['edit'])
     ]
 
     def __init__(self, request):
         self.request = request
->>>>>>> 199dd29d889a7eddb3b3bed48b624e071f6a698b

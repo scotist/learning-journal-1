@@ -2,9 +2,9 @@
 import pytest
 import webtest
 import os
-from learning_journal.__init__ import main
-# from pyramid.HTTPexceptions import HTTPFound, HTTPForbidden
-# from learning_journal.security import check_pw
+from learning_journal import main
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden
+from learning_journal.security import check_pw
 
 
 AUTH_DATA = {'username': 'scotist', 'password': 'haecceitas'}
@@ -30,9 +30,9 @@ def authenticated_app(app, auth_env):
     return app
 
 
-# def test_no_access_to_view(app):
-#     response = app.get('/secure')
-#     assert response.status_code == 403
+def test_no_access_to_view(app):
+    response = app.get('/secure')
+    assert response.status_code == 403
 
 
 # def test_access_to_view(authenticated_app):
