@@ -35,9 +35,9 @@ def authenticated_app(app, auth_env):
 #     assert response.status_code == 403
 
 
-# def test_access_to_view(authenticated_app):
-#     response = authenticated_app.get('/login')
-#     assert response.status_code == 200
+def test_access_to_view(authenticated_app):
+    response = authenticated_app.get('/login')
+    assert response.status_code == 200
 
 
 def test_password_exists(auth_env):
@@ -63,79 +63,39 @@ def test_stored_password_is_encrypted(auth_env):
     assert os.environ.get('AUTH_PASSWORD', None) != 'haecceitas'
 
 
-# def test_get_login_view(app):
-#     response = app.get('/login')
-#     assert response.status_code == 200
+def test_get_login_view(app):
+    response = app.get('/login')
+    assert response.status_code == 200
 
 
-# def test_post_login_success(app, auth_env):
-#     response = app.post('/login', AUTH_DATA)
-#     assert response.status_code == 302
+def test_post_login_success(app, auth_env):
+    response = app.post('/login', AUTH_DATA)
+    assert response.status_code == 302
 
 
-# def test_post_login_success_redirects_home(app, auth_env):
-#     data = {'username': 'scotist', 'password': 'haecceitas'}
-#     response = app.post('/login', data)
-#     headers = response.headers
-#     domain = 'http://localhost'
-#     actual_path = headers.get('Location', '')[len(domain):]
-#     assert actual_path -- '/'
+def test_post_login_success_redirects_home(app, auth_env):
+    data = {'username': 'scotist', 'password': 'haecceitas'}
+    response = app.post('/login', data)
+    headers = response.headers
+    domain = 'http://localhost'
+    actual_path = headers.get('Location', '')[len(domain):]
+    assert actual_path == '/'
 
 
-# def test_post_login_success_auth_tkt_present(app, auth_env):
-#     data = {'username': 'scotist', 'password': 'haecceitas'}
-#     response = app.post('/login', data)
-#     headers = response.headers
-#     cookies_set = headers.getall('Set-Cookie')
-#     assert cookies_set
-#     for cookie in cookies_set:
-#         if cookie.startswith('auth_tkt'):
-#             break
-#     else:
-#         assert False
+def test_post_login_success_auth_tkt_present(app, auth_env):
+    data = {'username': 'scotist', 'password': 'haecceitas'}
+    response = app.post('/login', data)
+    headers = response.headers
+    cookies_set = headers.getall('Set-Cookie')
+    assert cookies_set
+    for cookie in cookies_set:
+        if cookie.startswith('auth_tkt'):
+            break
+    else:
+        assert False
 
 
-# def test_post_login_fails_bad_password(app, auth_env):
-#     data = {'username': 'scotist', 'password': 'garbage'}
-#     response = app.post('/login', data)
-#     assert response.status_code == 200
-
-
-
-#     ////////////////////////
-
-# ** inside security.py **
-
-# import os
-# from passlib.apps import custom_app_context as pwd_context
-
-# def check_pw(pw):
-#     hashed = os.environ.get('AUTH_PASSWORD', 'this is not a password')
-#     return pwd_context.verify(pw, hashed)
-
-
-
-
-#     //////////////////////////
-
-
-# ** inside views.py**
-
-# @view_config(route_name='login', renderer='templates/login.pt')
-# def login(request):
-#     if request.method == 'POST':
-#         username = request.params.get('username', '')
-#         password = request.params.get('password', '')
-#         if check_pw(password):
-#             headers = remember(request, username)
-#             return HTTPFound(location='/', headers=headers)
-#     return {}
-
-
-
-#     //////////////////
-
-# ** inside init.py**
-
-# turn on login route config
-
+def test_post_login_fails_bad_password(app, auth_env):
+    data = {'username': 'scotist', 'password': 'garbage'}
+    response = app.post('/login', data)
+    assert response.status_code == 200

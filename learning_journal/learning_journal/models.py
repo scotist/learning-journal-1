@@ -14,6 +14,8 @@ from sqlalchemy.orm import (
 )
 from zope.sqlalchemy import ZopeTransactionExtension
 import markdown
+from wtforms import Form, StringField, TextAreaField, PasswordField
+from pyramid.security import (Allow, Everyone, ALL_PERMISSIONS)
 
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -33,4 +35,3 @@ class Entry(Base):
         return md.convert(self.text)
 
 
-Index('my_index', Entry.title, unique=True, mysql_length=255)
