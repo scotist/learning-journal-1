@@ -3,6 +3,7 @@ import pytest
 import webtest
 import os
 from learning_journal import main
+from learning_journal.models import Entry, DBSession
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from learning_journal.security import check_pw
 
@@ -33,6 +34,40 @@ def authenticated_app(app, auth_env):
 # def test_no_access_to_view(app):
 #     response = app.get('/secure')
 #     assert response.status_code == 403
+
+
+def test_create_route(app):
+    """Test if permissions block anonymous users."""
+    response = app.get('/create', status=403)
+    assert response.status_code == 403
+
+
+def test_edit_route(dbtransaction, app):
+    """Test if permissions block anonymous users."""
+    new_model = Entry(title="new stuff", text="stuff goes here")
+    DBSession.add(new_model)
+    DBSession.flush()
+    response = app.get('/edit/{}'.format(new_model.id), status=403)
+    assert response.status_code == 403
+
+
+# def test_authenticated_create_route(app):
+#     """Test if permissions allow admin."""
+#     response = app.post('/login', AUTH_DATA)
+#     assert response.status_code == 302
+#     create = app.get('/create')
+#     assert create.status_code == 200
+
+
+# def test_authenticated_edit_route(app):
+#     """Test if permissions allow admin."""
+#     app.post('/login', AUTH_DATA)
+#     app.get('/create')
+#     new_model = Entry(title="new stuff", text="stuff goes here")
+#     DBSession.add(new_model)
+#     DBSession.flush()
+#     edit = app.get('/edit/1')
+#     assert edit.status_code == 200
 
 
 def test_access_to_view(authenticated_app):
