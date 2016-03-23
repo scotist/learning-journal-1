@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 import datetime
 from .forms import EntryCreateForm, EntryUpdateForm, LoginForm
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPTemporaryRedirect
 from .security import check_pw
 from pyramid.security import remember, forget
 from .models import (
@@ -15,37 +15,24 @@ except ImportError:
     PASSWORD = "haecceitas"
 
 
-# @view_config(route_name='login', renderer='templates/login.jinja2')
-# def login_view(request):
-#     """ Log the user in automatically.
-
-#     The remember object actually returns a header list of tuples containing
-#     cookie information
-#     """
-#     form = LoginForm(request.POST)
-#     if request.method == 'POST' and form.validate():
-
-#         if form.data['username'] == USERNAME and \
-#            form.data['password'] == PASSWORD:
-#             headers = remember(request, userid="scotist")
-#             return HTTPFound(location="/", headers=headers)
-#         else:
-#             message = "Login Failed"
-#             color = "red"
-#     else:
-#         message = "Please Login"
-#         color = "green"
-    # return {"message": message, "color": color}
+@view_config(route_name='login', renderer='templates/login.jinja2')
+def login_view(request):
+    username = request.params.get('username', '')
+    password = request.params.get('password', '')
+    login_form = LoginForm(username=username, password=password)
+    if request.method == 'POST' and login_form.validate():
+        if login_form.data['username'] == USERNAME and \
+           login_form.data['password'] == PASSWORD:
+            headers = remember(request, userid="scotist")
+            return HTTPFound(location="/", headers=headers)
+    return {'form': login_form}
 
 
 @view_config(route_name='logout', renderer='string')
 def logout_view(request):
-    """ Log the user out automatically.
-
-    The remember object actually returns a header list of tuples containing
-    cookie information
-    """
+    """ Log the user out automatically."""
     headers = forget(request)
+    return HTTPTemporaryRedirect(location="/login")
     return HTTPFound(location="/", headers=headers)
 
 
@@ -91,14 +78,3 @@ def add_view(request):
         return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
 
-
-@view_config(route_name='login', renderer='templates/login.jinja2')
-def login_view(request):
-    username = request.params.get('username', '')
-    password = request.params.get('password', '')
-    login_form = LoginForm(username=username, password=password)
-    if request.method == 'POST':
-        if check_pw(password):
-            headers = remember(request, username)
-            return HTTPFound(location='/', headers=headers)
-    return {'form': login_form}

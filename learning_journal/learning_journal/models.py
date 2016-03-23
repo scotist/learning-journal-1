@@ -14,8 +14,8 @@ from sqlalchemy.orm import (
 )
 from zope.sqlalchemy import ZopeTransactionExtension
 import markdown
-from wtforms import Form, StringField, TextAreaField, PasswordField
-from pyramid.security import (Allow, Everyone, ALL_PERMISSIONS)
+# from wtforms import Form, StringField, TextAreaField, PasswordField
+# from pyramid.security import (Allow, Everyone, ALL_PERMISSIONS)
 
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))

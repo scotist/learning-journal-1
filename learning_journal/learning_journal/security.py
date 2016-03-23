@@ -1,5 +1,6 @@
 import os
 from passlib.apps import custom_app_context as pwd_context
+from pyramid.security import Allow, Everyone, ALL_PERMISSIONS
 
 
 def check_pw(pw):
@@ -12,46 +13,10 @@ def groupfinder(userid, request):
         return USERS.get(userid, [])
 
 
-# class DefaultRoot(object:
-#                   __acl__=[
-#                            (Allow, Everyone, 'view'),
-#                            (Allow, 'g:users', 'read'),
-#                            (Allow, 'g:users', 'create'),
-#                            (Allow, 'g:admins', 'ALL_PERMISSIONS'),
-#                           ])
-
-#     def __init__(self, request):
-#         self.request = request
-
-#     def groupfinder(userid, request):
-#         groups = []
-#         if userid.lower() in request.approved:
-#             groups.append('g:users')
-#         if userid.lower() in request.admins:
-#             groups.append('g:admins')
-#         return groups or None
-
-
-# class EntryRoot(object):
-
-#     __name__ = 'entry'
-
-#     @property
-#     def __parent__(self):
-#         return DefaultRoot(self.request)
-
-#     def __init__(self, request):
-#         self.request = request
-
-#     def __getitem__()
-
-from pyramid.security import Allow, Everyone, ALL_PERMISSIONS
-
-
 class DefaultRoot(object):
 
     __acl__ = [
-        (Allow, 'scotist', ['edit'])
+        (Allow, 'scotist', ['edit', 'create'])
     ]
 
     def __init__(self, request):
