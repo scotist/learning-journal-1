@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning Journal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-brand">
+              <li class="title">Bloggy Blog</li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="http://www.github.com/scotist">Github</a></li>
+              {% block navbar %}{% endblock %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-sm-2">
+            <a class="btn btn-primary" href="add_entry.html">Add Entry</a>
+          </div>
+        </div>
+        {% block content %}{% endblock %}
+      </div>
+    <div class="push"></div>
+    <footer class="footer">
+      &copy; 2016  Michael Sullivan | All Rights Reserved | Especially the First One
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+
+

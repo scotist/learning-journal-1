@@ -36,7 +36,7 @@ def logout_view(request):
     return HTTPFound(location="/", headers=headers)
 
 
-@view_config(route_name='list', renderer='templates/pretty.jinja2')
+@view_config(route_name='list', renderer='templates/list.jinja2')
 def list_view(request):
     display = DBSession.query(Entry).order_by(Entry.created)
     return {"content": display, "header": "entries.order_by(latest)[:10]"}
