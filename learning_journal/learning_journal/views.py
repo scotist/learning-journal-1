@@ -32,7 +32,7 @@ def login_view(request):
 def logout_view(request):
     """ Log the user out automatically."""
     headers = forget(request)
-    return HTTPTemporaryRedirect(location="/login")
+    # return HTTPTemporaryRedirect(location="/login")
     return HTTPFound(location="/", headers=headers)
 
 
