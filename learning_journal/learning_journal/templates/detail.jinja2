@@ -1,4 +1,3 @@
-
 {% extends "index.html" %}
 {% block navbar %}
 {% if request.has_permission('edit') %}
@@ -12,12 +11,15 @@
     <div class="row">
         <div class="col-sm-2">
         </div>
-        <div class="row">
-            <b>{{entry.created}}</b> ==> &lt;title&gt;<span>{{entry.title}}</span>&lt;/title&gt;<span>{{entry.title}}</span>
-            {{entry.markdown_text|safe}}
-            <a href="{{request.route_url('edit', entry_id = entry.id)}}"><input type="submit" value="Edit"></a>
-            <a href="/"><input type="button" value="Home"></a>
-          <br/>
+        <div class="col-sm-8">
+            <article>
+                <h1>{{ entry.title }}</h1>
+                <p>{{ entry.text }}</p>
+                <p>{{ entry.created.strftime("%B %d %Y -- %I:%M%p UTC") }}</p>
+                <hr>
+                {{ text|safe }}
+                <hr>
+            </article>
         </div>
         <div class="col-sm-2">
         </div>
@@ -27,7 +29,7 @@
         <div class="col-sm-2">
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-default" href="/edit_entry/{{ entry.id }}">Edit Entry</a>
+            <a class="btn btn-default" href="/edit/{{ entry.id }}">Edit Entry</a>
         </div>
         <div class="col-sm-2">
             <a class="btn btn-danger" href="/delete_entry/{{ entry.id }}">Delete Entry</a>

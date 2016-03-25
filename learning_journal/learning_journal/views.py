@@ -42,7 +42,7 @@ def list_view(request):
     return {"content": display, "header": "entries.order_by(latest)[:10]"}
 
 
-@view_config(route_name='detail', renderer='templates/detail.jinja2')
+@view_config(route_name='view', renderer='templates/detail.jinja2')
 def detail_view(request):
     id_ = request.matchdict.get('entry_id')
     entry = DBSession().query(Entry).get(id_)
