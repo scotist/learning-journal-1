@@ -59,6 +59,7 @@ setup(name='learning_journal',
       main = learning_journal:main
       [console_scripts]
       initialize_db = learning_journal.scripts.initializedb:main
+      load_api = learning_journal.scripts.load_class_api:main
       """,
       extras_require={
         "test": test_requires,

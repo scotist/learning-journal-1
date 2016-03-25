@@ -14,6 +14,8 @@ from sqlalchemy.orm import (
 )
 from zope.sqlalchemy import ZopeTransactionExtension
 import markdown
+# from wtforms import Form, StringField, TextAreaField, PasswordField
+# from pyramid.security import (Allow, Everyone, ALL_PERMISSIONS)
 
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -26,10 +28,8 @@ class Entry(Base):
     title = Column(Unicode(128), unique=True, nullable=False)
     text = Column(UnicodeText)
     created = Column(DateTime, default=datetime.datetime.utcnow)
+
     @property
     def markdown_text(self):
         md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
         return md.convert(self.text)
-
-
-Index('my_index', Entry.title, unique=True, mysql_length=255)

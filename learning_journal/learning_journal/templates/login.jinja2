@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
+
+<a href='/'>Entry Index</a>
+
+<h3>Login:</h3>
+<form method='POST' action=''>
+{% for field in form %}
+<div>{{ field.label }}: {{ field }} </div>
+{% endfor %}
+<input type='submit' value='Submit'/>
+</form>
+
+{% endblock %}

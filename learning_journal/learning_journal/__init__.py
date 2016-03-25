@@ -1,24 +1,53 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
-
+import os
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from .security import DefaultRoot
 from .models import (
     DBSession,
     Base,
+    # DefaultRoot,
 )
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from .security import groupfinder
 
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    if 'DATABASE_URL' in os.environ:
+        settings['sqlalchemy.url'] = os.environ['DATABASE_URL']
+    engine = engine_from_config(settings, 'sqlalchemy.')
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
+    secret = os.environ.get('AUTH_SECRET', 'somesecret')
     config = Configurator(settings=settings)
+    # config = Configurator(
+    #     settings=settings,
+    #     authentication_policy=authentication_policy,
+    #     authorization_policy=authorization_policy,
+    #     root)
+    config = Configurator(
+        settings=settings,
+        authentication_policy=AuthTktAuthenticationPolicy(
+            secret,
+            hashalg='sha512'
+        ),
+        authorization_policy=ACLAuthorizationPolicy(),
+        root_factory=DefaultRoot,
+    )
     config.include('pyramid_jinja2')
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('list', '/')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
     config.add_route('add_entry', '/create')
+    config.add_route('delete_entry', '/delete_entry/{entry_id}')
+    # config.add_route('delete_entry', '/')
     config.add_route('detail', '/view/{entry_id}')
     config.add_route('edit', '/edit/{entry_id}')
 
