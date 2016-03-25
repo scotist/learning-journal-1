@@ -11,8 +11,7 @@ from .models import (
 try:
     from .secrets import USERNAME, PASSWORD
 except ImportError:
-    USERNAME = "scotist"
-    PASSWORD = "haecceitas"
+    pass
 
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
