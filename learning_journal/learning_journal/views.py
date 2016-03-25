@@ -78,3 +78,11 @@ def add_view(request):
         return HTTPFound(location="/")
     return {"time": datetime.datetime.utcnow()}
 
+
+@view_config(route_name='delete_entry', renderer='templates/list.jinja2',         permission='edit')
+def delete_entry(request):
+    entry_id = request.matchdict['entry_id']
+    entry = DBSession.query(Entry).get(entry_id)
+    DBSession.delete(entry)
+    DBSession.flush()
+    return HTTPFound(location='/')

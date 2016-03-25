@@ -40,9 +40,10 @@ def main(global_config, **settings):
 
     config.add_route('list', '/')
     config.add_route('login', '/login')
-
     config.add_route('logout', '/logout')
     config.add_route('add_entry', '/create')
+    config.add_route('delete_entry', '/delete_entry/{entry_id}')
+    # config.add_route('delete_entry', '/')
     config.add_route('detail', '/view/{entry_id}')
     config.add_route('edit', '/edit/{entry_id}')
 
