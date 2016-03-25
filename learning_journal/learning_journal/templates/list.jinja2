@@ -14,7 +14,7 @@
             <div class="col-sm-9">
             </div>
             <div class="col-md-3">
-                <a class="btn btn-primary" href="/add_entry">New Entry</a>
+                <a class="btn btn-primary" href="/create">New Entry</a>
             </div>
         </div>
         {% endif %}
@@ -26,7 +26,7 @@
         <div class="col-md-8">
             <section id="articles">
                 <article id="article_template">
-                    <h1><a href="{{ entry.id }}">{{ entry.title }}</a></h1>
+                    <h1><a href="/edit/{{ entry.id }}">{{ entry.title }}</a></h1>
                     <p>{{ entry.text }}</p>
                     <p>{{ entry.created.strftime("%B %d %Y -- %I:%M%p UTC") }}</time>
                 </article>
