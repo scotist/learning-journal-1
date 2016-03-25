@@ -38,11 +38,11 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
-    with transaction.manager:
-        password = os.environ.get('ADMIN_PASSWORD', 'admin')
-        encrypted = password_context.encrypt(password)
-        admin = User(name=u'admin', password=encrypted)
-        DBSession.add(admin)
+    # with transaction.manager:
+    #     password = os.environ.get('ADMIN_PASSWORD', 'admin')
+    #     encrypted = password_context.encrypt(password)
+    #     admin = User(name=u'admin', password=encrypted)
+    #     DBSession.add(admin)
     # with transaction.manager:
     #     model = Entry(title='one', text="waffles")
     #     DBSession.add(model)
