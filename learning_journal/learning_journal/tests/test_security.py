@@ -31,11 +31,6 @@ def authenticated_app(app, auth_env):
     return app
 
 
-# def test_no_access_to_view(app):
-#     response = app.get('/secure')
-#     assert response.status_code == 403
-
-
 def test_create_route(app):
     """Test if permissions block anonymous users."""
     response = app.get('/create', status=403)
@@ -51,23 +46,23 @@ def test_edit_route(dbtransaction, app):
     assert response.status_code == 403
 
 
-# def test_authenticated_create_route(app):
-#     """Test if permissions allow admin."""
-#     response = app.post('/login', AUTH_DATA)
-#     assert response.status_code == 302
-#     create = app.get('/create')
-#     assert create.status_code == 200
+def test_authenticated_create_route(app):
+    """Test if permissions allow admin."""
+    response = app.post('/login', AUTH_DATA)
+    assert response.status_code == 302
+    create = app.get('/create')
+    assert create.status_code == 200
 
 
-# def test_authenticated_edit_route(app):
-#     """Test if permissions allow admin."""
-#     app.post('/login', AUTH_DATA)
-#     app.get('/create')
-#     new_model = Entry(title="new stuff", text="stuff goes here")
-#     DBSession.add(new_model)
-#     DBSession.flush()
-#     edit = app.get('/edit/1')
-#     assert edit.status_code == 200
+def test_authenticated_edit_route(app):
+    """Test if permissions allow admin."""
+    app.post('/login', AUTH_DATA)
+    app.get('/create')
+    new_model = Entry(title="new stuff", text="stuff goes here")
+    DBSession.add(new_model)
+    DBSession.flush()
+    edit = app.get('/edit/1')
+    assert edit.status_code == 200
 
 
 def test_access_to_view(authenticated_app):
@@ -87,6 +82,7 @@ def test_check_pw_success(auth_env):
     from learning_journal.security import check_pw
     password = 'haecceitas'
     assert check_pw(password)
+
 
 def test_check_pw_fails(auth_env):
     from learning_journal.security import check_pw
@@ -134,3 +130,5 @@ def test_post_login_fails_bad_password(app, auth_env):
     data = {'username': 'scotist', 'password': 'garbage'}
     response = app.post('/login', data)
     assert response.status_code == 200
+
+

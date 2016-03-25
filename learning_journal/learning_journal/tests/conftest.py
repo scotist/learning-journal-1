@@ -17,7 +17,6 @@ def app():
     from learning_journal import main
     from pyramid.paster import get_appsettings
     from webtest import TestApp
-    # import pdb; pdb.set_trace()
     settings = get_appsettings('development.ini')
     settings['sqlalchemy.url'] = TEST_DATABASE_URL
     app = main({}, **settings)
@@ -26,7 +25,6 @@ def app():
 
 @pytest.fixture(scope="session")
 def sqlengine(request):
-    # engine is the connection to the database
     engine = create_engine(TEST_DATABASE_URL)
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)

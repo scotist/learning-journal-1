@@ -33,5 +33,3 @@ class Entry(Base):
     def markdown_text(self):
         md = markdown.Markdown(safe_mode='replace', html_replacement_text='--RAW HTML NOT ALLOWED--')
         return md.convert(self.text)
-
-
