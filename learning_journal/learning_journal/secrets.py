@@ -1,0 +1,2 @@
+USERNAME = "scotist"
+PASSWORD = "haecceitas"
