@@ -1,2 +1,0 @@
-USERNAME = "scotist"
-PASSWORD = "haecceitas"
