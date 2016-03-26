@@ -9,7 +9,7 @@ from .models import (
     Entry,
 )
 try:
-    from .secrets import USERNAME, PASSWORD
+    from .security import check_pw
 except ImportError:
     pass
 
@@ -20,9 +20,8 @@ def login_view(request):
     password = request.params.get('password', '')
     login_form = LoginForm(username=username, password=password)
     if request.method == 'POST' and login_form.validate():
-        if login_form.data['username'] == USERNAME and \
-           login_form.data['password'] == PASSWORD:
-            headers = remember(request, userid="scotist")
+        if check_pw(password):
+            headers = remember(request, userid=username)
             return HTTPFound(location="/", headers=headers)
     return {'form': login_form}
 
